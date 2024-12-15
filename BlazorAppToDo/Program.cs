@@ -1,5 +1,6 @@
 using BlazorAppToDo.Components;
 using BlazorAppToDo.Data;
+using BlazorAppToDo.GameModels;
 using BlazorAppToDo.Interfaces;
 using BlazorAppToDo.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +19,9 @@ namespace BlazorAppToDo
 
             // Регистрация репозитория
             builder.Services.AddScoped<IToDoRepository, ToDoRepository>();
+
+            // Регистрация класса ChessBoard в DI-контейнере
+            builder.Services.AddTransient<ChessBoard>();
 
             // Add services to the container.
             builder.Services.AddRazorComponents()

@@ -1,0 +1,16 @@
+﻿@page "/" 
+@inherits HomeBase 
+
+<PageTitle>Home</PageTitle>
+
+<h1>To-Do list</h1>
+
+<ul>
+     @foreach (var todo in ToDoList)
+    {
+        <li>
+            <strong>@todo.Task</strong> @(todo.IsCompleted ? "(Completed)" : "")
+        </li>
+    } 
+</ul>
+ 
