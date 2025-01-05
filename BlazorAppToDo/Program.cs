@@ -4,6 +4,7 @@ using BlazorAppToDo.GameModels;
 using BlazorAppToDo.Interfaces;
 using BlazorAppToDo.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 namespace BlazorAppToDo
 {
@@ -12,6 +13,17 @@ namespace BlazorAppToDo
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            // Конфигурация Serilog
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(builder.Configuration) // Чтение настроек из appsettings.json
+                .Enrich.FromLogContext()
+                .WriteTo.Console()
+                .WriteTo.File("Logs/log-.txt", rollingInterval: RollingInterval.Day)
+                .CreateLogger();
+
+            // Заменяем стандартный логгер на Serilog
+            builder.Host.UseSerilog();
 
             // Добавление DbContext с базой в памяти
             builder.Services.AddDbContext<AppDbContext>(options =>
